@@ -1,0 +1,46 @@
+\subsection{Parameters of PIV}
+\label{sec:systemdesc}
+
+\subsubsection{Analysis region}
+An analysis region ($AR$), is a rectangular or square
+image portion that is selected to analyze particle groups in the image.
+Thus, if two regions are selected, they can be compared to each other using the correlation coefficient.
+
+
+\subsubsection{Window size}
+The window size ($WSIZE$) of a square analysis region
+has reference to the length in pixels of the side of this region.
+An increment in the $WSIZE$ value promotes an increase of the computational cost of 
+method, but in counterpart, an increment in the quantity of the signal information
+inside the analysis region, and consequently it decreases the probability of having
+a false positive in the match of two analysis region in two images.
+On the other hand, small $WSIZE$ values, avoid the loss of correlation 
+between two matched analysis regions that undergo deformation.
+
+\subsubsection{Threshold value}
+The threshold value ($T$) used in the $PIV$ technique, indicates the minimum value
+of $PCC$ that is used to detect a match between two analysis regions.
+A high threshold value guarantees that the particle groups in matched 
+analysis regions are effectively, the same; but it avoids, that two of the same 
+analysis regions be matched when these suffer position deformations in its
+particles groups.
+Moreover, a low threshold value guarantees that the analysis regions 
+can be matched after going through considerable  position deformations in 
+its particles groups but widens the possibility of having false positives 
+in the matched analysis regions.
+
+\subsubsection{Step length}
+The step length ($l_0$) is an integer value in pixels, which is used as minimum dislocation unit 
+to choose the portion of the image where the analysis region will be selected from.
+Thus, if two analysis regions are selected in two different images, if a match
+is not declared between these images, one of these images is discarded and
+a new analysis region is selected, distant a $l_0$ (horizontal or vertical) next from
+discarded analysis region.
+
+
+\subsubsection{Search length}
+In the same context of the ``Step Length'', the search length ($L$) denotes the maximum
+distance (horizontal and vertical) in pixels to select a new  analysis region, 
+from the original position of the initial analysis region. Hence 
+the distance displaced $nl_0, \forall n\in Z^+,$ to choose a new analysis region,
+should be fulfill that $nl_0\leq L$.

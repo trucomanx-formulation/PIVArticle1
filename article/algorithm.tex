@@ -1,0 +1,194 @@
+
+The Algorithm \ref{alg:PIV} shows the procedure of $PIV$ method implemented in this work.
+The algorithm needs as input data a set of $M$ pictures $P_m$, for all
+$m$ integer so that  $0 \leq m \leq M-1$. 
+These pictures represent the process of load and break static test; for 
+this purpose, in the picture $P_0$, $N$ points $X_0^n$, for all
+$n$ integer so that  $0 \leq n \leq N-1$ will be chosen.
+Thus, the algorithm tracks these $N$ points through the $M$ images $P_m$
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{algorithm}[!h]
+\SetKwInOut{Variables}{Variables}
+
+ \KwData{A set of $M$ pictures $P_m$ taken each $\tau$ seconds.}
+ \KwResult{$X_{m}^n$, a path that describe the deformation of the beam 
+ caused by load and break study of $N$ analysis regions across $M$ Pictures.}
+
+ ~\\
+ $\{X_0^n,WSIZE\} \leftarrow$ quality\_test($P_0$)\;
+ ~\\
+ Choose the values of $\tau$, $l_0$ and $L$\;
+ ~\\
+ \For{$m\leftarrow 1$ \KwTo $M-1$ }{
+  \For{$n\leftarrow 0$ \KwTo $N-1$ }{
+  $\{X_{m}^n,Found\}$ $\leftarrow$ search\_arround\_of($X_{m-1}^n$,$A_{m-1}^n$,$P_m$)
+  
+  }
+ }
+\caption{PIV algorithm}
+\label{alg:PIV} 
+\end{algorithm}
+The function $quality\_test()$, described in the Algorithm \ref{alg:qualitytest}, 
+helps the user to choose
+the better position of initial tracking points $X_{0}^n$, in the picture
+$P_0$, and the side size ($WSIZE$) of the analysis regions $A_{0}^n$.
+This function uses internally the functions 
+$make\_displacemente\_test()$ and 
+$make\_rotation\_test()$, that are described in the Algorithm \ref{alg:displacementtest}
+and \ref{alg:rotationtest}, respectively. Section \ref{sec:qualitytests}
+shows some examples of a quality test.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{algorithm}[!h]
+\SetKwInOut{Input}{Input}
+\SetKwInOut{Output}{Output}
+
+\SetKwProg{Fn}{Function}{ is}{end}
+\Fn{  quality\_test($P$)}{
+  \Input{It use a picture $P$ where will be chosen a set of $N$ initial analysis region.}
+  \Output{$\{X^n,WSIZE\}$, the points $X^n$ where the analysis regions  and 
+  a variable $WSIZE$ that indicates their side size will be chosen.}
+  \Repeat{User approves the results of displacement and rotation tests}
+  {
+    $\bullet$ Choose the values of $N$ and $WSIZE$\; 
+    $\bullet$ Select $N$ points $X^n$ in the picture $P$\;
+    $\bullet$ Conform in $X^n$ and over $P$ a set of analysis 
+    regions $A^n$ of side $WSIZE$ pixels\;
+    \For{$n\leftarrow 0$ \KwTo $N-1$}{
+      make\_displacement\_test($X^n$,$WSIZE$,$P$)\;
+      make\_rotation\_test($X^n$,$WSIZE$,$P$)\;
+    }
+  }
+}
+\caption{Quality test of chosen points.}
+\label{alg:qualitytest} 
+\end{algorithm}
+
+The Algorithm \ref{alg:displacementtest} returns a graphic where a curve
+that describe the $PCC$ value between an
+initial analysis region in $(i_0,j_0)$ and its neighbors in $(i,j)$ that fulfill 
+$0 \leq |i-i_0|< d_{max}$ and $0 \leq |j-j_0| < d_{max}$.
+Here we suggest that $d_{max}\equiv L$.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{algorithm}[!h]
+\SetKwInOut{Input}{Input}
+\SetKwInOut{Output}{Output}
+
+\SetKwProg{Fn}{Function}{ is}{end}
+\Fn{  make\_displacement\_test($X$,$WSIZE$,$P$)}{
+  \Input{A picture $P$, a point $X\equiv (i_0,j_0)$ and a variable $WSIZE$.}
+  \Output{A figure with the correlation of an analysis region, in 
+  the point $X$, with your neighbor analysis regions.}
+ ~\\
+  Conform in $X$ and over $P$ an analysis region $A_0$ of side $WSIZE$ pixels\;
+ ~\\  
+  Choose the value $d_{max}>0$\;
+ ~\\  
+  \For{$a \leftarrow -(d_{max}-1)$ \KwTo $d_{max}-1$ }{
+    \For{$b \leftarrow -(d_{max}-1)$ \KwTo $d_{max}-1$ }{
+      $X_{ab} \leftarrow X + (a,b)$\;
+      Conform in  $P$ and around the central point $X_{ab}$  an analysis region $A_{ab}$ of side $WSIZE$ pixels\;
+      $C_{ab} \leftarrow \rho(A_0,A_{ab})$
+    }
+  }
+  
+  Plot the values of $C_{ab}$\;
+ ~\\  
+  Plot $C_{d}$ from $C_{ab}$, so that $d=\sqrt{a^2+b^2}$ $\forall$ $-(d_{max}-1)\leq a,b \leq d_{max}-1$, and using
+  the highest value of $PCC$ when many $PCC$ values coincide with the same distance $d$\; 
+}
+\caption{Displacement test of one point.}
+\label{alg:displacementtest} 
+\end{algorithm}
+
+The Algorithm \ref{alg:rotationtest} returns a graphic where
+is showed a curve that describe the $PCC$ value between an
+analysis region a your rotated versions until a angle $\alpha_{max}$ degrees.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{algorithm}[!h]
+\SetKwInOut{Input}{Input}
+\SetKwInOut{Output}{Output}
+
+\SetKwProg{Fn}{Function}{ is}{end}
+\Fn{  make\_rotation\_test($X$,$WSIZE$,$P$)}{
+  \Input{A picture $P$, a point $X\equiv (i_0,j_0)$ and a variable $WSIZE$.}
+  \Output{A figure with the correlation of an analysis region, in 
+  the point $X$, with its rotated versions.}
+
+  Conform in $P$ and around the point $X$ an analysis region $B_0$ of side $WSIZE$ pixels\;
+  Choose the value $\alpha_{max}>0$ degrees\;
+  
+  \For{$i \leftarrow 0$ \KwTo $\lfloor\alpha_{max}/0.5\rfloor$ }{
+    $\alpha_i \leftarrow 0.5 i$\;
+    Conform in $P$ and around the point $X$ an analysis region $B_i$ of side $WSIZE$ pixels
+    rotated an angle $\alpha_i$\;
+    $C_i \leftarrow \rho(B_0,B_i)$
+  }
+  
+  Plot the values of $C_i$ versus $\alpha_i$.
+}
+\caption{Rotation test of one point.}
+\label{alg:rotationtest} 
+\end{algorithm}
+
+In the Algorithm \ref{alg:PIV}  the variables $L$, $l_0$ and $\tau$, were also chosen.
+The criteria to select these values using the results of quality test
+can be seen in the Sec. \ref{sec:criteria}.
+By other side, in the Algorithm \ref{alg:PIV}, the function $search\_arround\_of()$, 
+described in the Algorithm \ref{alg:SearchArround}, searches for
+an analysis region that matches $A_{m-1}^n$, around the point $X_{m-1}^n$ 
+in the picture $P_m$, and, if the match exists, then the
+point $X_{m}^n$ of match is returned, joint with the variable $Found$ loaded with $True$; in other cases
+$Found$ is loaded with $False$. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{algorithm}[!h]
+\SetKwInOut{Input}{Input}
+\SetKwInOut{Output}{Output}
+
+\SetKwProg{Fn}{Function}{ is}{end}
+\Fn{  search\_arround\_of($X$,$A$,$P$)}{
+  \Input{It use a picture $P$ where an analysis region 
+  that match with $A$ will be searched, this region will be searched around the $X$ point.}
+  \Output{$\{Y,Found\}$, the point $Y$ where a match with $A$ and 
+  a variable $Found$ that indicates if the match exist are found.}
+\begin{flalign*}
+ Found & \leftarrow False & \\
+ Y &\leftarrow X & \\
+ OldPCC & \leftarrow -1.0 & \\
+ i & \leftarrow 0 & \\
+ j & \leftarrow 0 & %
+\end{flalign*}
+
+  \While{$l_0 i\leq L$ }{
+  \While{$l_0 j\leq L$ }{
+  
+   $\bullet$ $y \leftarrow X+(l_0~ i,l_0~j)$\;
+   $\bullet$ Conform in $P$ and around the point $y$ an analysis region $R$ of side $WSIZE$ pixels\;
+   $\bullet$ $PCC \leftarrow \rho(R,A)$\;
+   ~\\
+   
+    \If{$PCC\geq T$ \textbf{and} $PCC \geq OldPCC$ }{
+      \begin{flalign*}
+      Y & \leftarrow y & \\
+      Found & \leftarrow True & \\
+      OldPCC & \leftarrow PCC & %
+      \end{flalign*}
+    }
+    $i\leftarrow i+1$\;$j\leftarrow j+1$\;
+  }
+  }
+}
+\caption{Search a match with $A$, around a point $X$ in a picture $P$.}
+\label{alg:SearchArround} 
+\end{algorithm}
+
+
+

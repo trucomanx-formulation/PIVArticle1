@@ -1,0 +1,90 @@
+\documentclass[a4paper,10pt]{article}
+
+% The following packages can be found on http:\\www.ctan.org
+\usepackage{graphicx} % for pdf, bitmapped graphics files
+\usepackage{caption}
+\usepackage{subcaption}
+
+\graphicspath{{../}}
+%\usepackage{epstopdf} % for postscript graphics files
+\usepackage{amsmath} % assumes amsmath package installed
+\usepackage{amssymb}  % assumes amsmath package installed
+\usepackage[caption=false,font=footnotesize]{subfig}
+%\usepackage{fixltx2e}
+\usepackage{float}
+
+\usepackage[ruled]{algorithm2e}
+\usepackage{comment}
+\usepackage{color}
+
+\usepackage{hyperref}
+\usepackage[hyphenbreaks]{breakurl}
+
+\usepackage{breakcites}
+
+
+\title{Parameters of the PIV Technique for Deformations Analysis to Static Bending Tests}
+
+\author{Rodrigo Allan Pereira,Fernando Pujaico Rivera,\\%
+	Francisco Carlos Gomes,Roberto Alves Braga Junior%
+%	\thanks{rodrigo.apereira@deg.ufla.br, fernando.pujaico.rivera@gmail.com,\\%
+%		fcgomes@deg.ufla.br,robertobraga@deg.ufla.br}%
+}
+
+
+\begin{document}
+
+\maketitle
+
+%\tableofcontents
+
+\begin{abstract}
+\input{abst}
+\end{abstract}
+
+\section{INTRODUCTION}
+\input{intro}
+\input{theory}
+\input{parametersofpiv}
+
+\section{MATERIALS AND METHODS}
+\input{systemsetup}
+\input{qualitytest1}
+\input{qualitytest2}
+
+\section{CRITERIA FOR VARIABLE SELECTION}
+\label{sec:criteria}
+\input{criteria}
+\input{measureerror}
+
+\section{NUMERICAL RESULTS}
+\input{numerical}
+%testes com diferentes parametros
+% tabelas e graficos
+
+
+
+\section{CONCLUSIONS}
+\input{conclu}
+
+
+
+\section*{ACKNOWLEDGMENT}
+
+\input{ackn}
+
+\section{APPENDIX: ALGORITHM DESCRIPTION} 
+\label{sec:algorithm}
+\input{algorithm}
+
+%FAPEMIG\\
+%numero de bolsa\\
+%numero de projeto\\
+%numero de aluno
+
+
+\bibliography{article}   %>>>> bibliography data in report.bib
+\bibliographystyle{apalike}
+
+\end{document}
+

@@ -1,0 +1,18 @@
+\subsection{Measure error in the PIV technique}
+Like any measure technique, the $PIV$ technique also has considerations to 
+estimate the maximum measure error in the calculus of the displacement.
+To determinate analytically this data, we have to use the result of
+Sec. \ref{subsec:steplength}, where was seen that the 
+maximum (bi-dimensional) measure error, 
+in predicting the displacement of an analysis region between two consecutive images,
+is of $l_0\sqrt{2}/2$ pixels. Thus, given that in the process of $PIV$ technique 
+we made $M-1$ comparison with the $M$ pictures, 
+to determinate the maximum (possible) measure error $e$ in pixels, we use the next equation
+\begin{equation}\label{eq:measureerror}
+Measure~error\leq e\equiv l_0(M-1)\frac{\sqrt{2}}{2}
+\end{equation}
+For everything seen before, it's easy to notice that to get the maximum  measure error
+in millimeters we use $l_0(M-1)\frac{\sqrt{2}}{2}~\beta$, where $\beta$ is the 
+conversion factor of pixel to millimeters; thus, to improve $e$ we should
+to minimize this relation, using pictures with a resolution 
+as large as our computing power allows.

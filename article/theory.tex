@@ -1,0 +1,34 @@
+\subsection{Theory}
+\subsubsection{Pearson Correlation Coefficient}
+The Pearson Correlation Coefficient ($PCC$) \cite{Pearson} measures the correlation degree between two
+signals $X$ and $Y$, with $N$ samples denoted by $X_i$ and $Y_i$ respectively.
+\begin{equation}
+ \rho(X,Y)=\frac{\sum\limits_{i=1}^{N} (X_i-\mu_{X})(Y_i-\mu_{Y})}{N~\sigma_{X}~\sigma_{Y}},
+\end{equation} 
+where $\mu_{X}$, $\sigma_{X}$, $\mu_{Y}$ and $\sigma_{Y}$ are the expected values and 
+the standard deviation values of the signals $X$ and $Y$ respectively.
+
+The range value of the coefficient is between $-1 \leq \rho(X,Y) \leq +1$, where a value close
+to $+1$ indicates that there is a high correlation level between $X$ and $Y$, 
+on the other hand values close to $0$ indicate that there isn't a correlation and 
+finally values close to $-1$ indicate that there is a correlation but with opposite sense,
+this means, for example, that when a variable grows the another decreases its value proportionally.
+
+\subsubsection{Particle Image Velocimetry}
+The Particle Image Velocimetry ($PIV$) is an optical technique designed 
+to flow visualization.
+This method needs, to be executed, that the flow in study contain particles, in other words, 
+visible elements in the flow; thus
+pictures of flow movement are taken and the position of particle groups are
+identified between images, forming  a velocity flow map with magnitude and direction \cite{piv1}.
+
+To recognize two identical particle groups between two consecutive images,
+many methods may be used, the most widely used method in published material is the
+$PCC$ method; for this purpose analysis regions are selected in each image
+and if the $PCC$ value, calculated over these data, 
+exceeds a threshold, the match is declared and the particle groups
+are identified, else ways, another analysis region is selected in  one image and the match test
+is performed again.
+
+%In this study line also can be found Particle Tracking Velocimetry (PTV)
+
